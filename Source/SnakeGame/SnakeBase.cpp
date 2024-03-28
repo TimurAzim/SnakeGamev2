@@ -69,32 +69,36 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 	
 }
 
+void ASnakeBase::SetIsAbeleMove(bool IsValue)
+{
+	IsMoveProgress = IsValue;
+}
+
 void ASnakeBase::Move()
 {
 	FVector MovementVector(ForceInitToZero);
 	FRotator NewRotator;
 
-	float MovementSpeed = ElementSize;
-	
 	switch (LastMoveDirection)
 	{
 	case EMovementDirection::UP:
-		MovementVector.X += MovementSpeed;
+		MovementVector.X += ElementSize;
 		MovementVector.Rotation() = FRotator(0.f, -90.f, 0.f);
 		break;
 	case EMovementDirection::DOWN:
-		MovementVector.X -= MovementSpeed;
+		MovementVector.X -= ElementSize;
 		MovementVector.Rotation() = FRotator(0.f, 90.f, 0.f);
 		break;
 	case EMovementDirection::LEFT:
-		MovementVector.Y += MovementSpeed;
+		MovementVector.Y += ElementSize;
 		MovementVector.Rotation() = FRotator(90.f, -90.f, 0.f);
 		break;
 	case EMovementDirection::RIGHT:
-		MovementVector.Y -= MovementSpeed;
+		MovementVector.Y -= ElementSize;
 		MovementVector.Rotation() = FRotator(-90.f, -90.f, 0.f);
 		break;
 	}
+
 
 	//AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
@@ -116,6 +120,7 @@ void ASnakeBase::Move()
 
 	SnakeElements[0]->AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
+	SetIsAbeleMove(false);
 }
 
 void ASnakeBase::SnakeElementOverlap(ASnakeElementBase* OverlappedElement, AActor* Other)

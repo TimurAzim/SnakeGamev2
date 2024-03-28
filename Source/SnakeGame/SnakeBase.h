@@ -41,19 +41,19 @@ public:
 	UPROPERTY()
 		EMovementDirection LastMoveDirection;
 
-	//For any Bounus speed
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "How long is any bonus valid")
 	float StepDelay;
 	UPROPERTY()
 	float BufferTime;
 
-	//For method SetLastElementSnale in SnakeElementBase
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LastElement")
 		UStaticMesh* ChangesMesh;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	bool IsMoveProgress = false;
 
 public:	
 	// Called every frame
@@ -62,6 +62,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddSnakeElement(int ElementsNum = 1);
 
+	UFUNCTION()
+	void SetIsAbeleMove(bool IsValue);
+
 	UFUNCTION(BlueprintCallable)
 	void Move();
 
@@ -69,4 +72,8 @@ public:
 	void SnakeElementOverlap(ASnakeElementBase* OverlappedElement, AActor* Other);
 
 
+	FORCEINLINE bool GetIsAbeleMove() const
+	{
+		return IsMoveProgress;
+	}
 };
